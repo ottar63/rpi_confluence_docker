@@ -14,9 +14,10 @@ COPY 	jdk1.${JAVA_MAJOR}.${JAVA_MINOR} /opt/jdk1.${JAVA_MAJOR}.${JAVA_MINOR}
 
 RUN  ln -s /opt/jdk1.${JAVA_MAJOR}.${JAVA_MINOR} /opt/java
 
-RUN 	apt update \
-	&& apt upgrade -y \
-	&& apt install curl -y \
+RUN 	apt-get update \
+	&& apt-get upgrade -y \
+	&& apt-get install curl -y --no-install-recommends \
+	&& rm -rf /var/lib/apt/lists/* \
 	&& mkdir -p ${CONF_HOME} \
 	&& mkdir -p ${CONF_INSTALL} \
 	&& curl -Ls "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \

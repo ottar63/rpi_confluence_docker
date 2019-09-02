@@ -13,7 +13,6 @@ COPY 	jdk1.${JAVA_MAJOR}.${JAVA_MINOR} /opt/jdk1.${JAVA_MAJOR}.${JAVA_MINOR}
 
 
 RUN  ln -s /opt/jdk1.${JAVA_MAJOR}.${JAVA_MINOR} /opt/java
-RUN  rm /opt/java/src.zip
 
 RUN 	apt update \
 	&& apt upgrade -y \

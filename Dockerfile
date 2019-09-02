@@ -10,9 +10,6 @@ ENV CONF_VERSION 6.15.8
 
 
 COPY 	jdk1.${JAVA_MAJOR}.${JAVA_MINOR} /opt/jdk1.${JAVA_MAJOR}.${JAVA_MINOR}
-RUN  	echo "export JAVA_HOME=/opt/java\n" >/etc/profile.d/java.sh 
-RUN	echo "export PATH=$PATH:${JAVA_HOME}/bin" >>/etc/profile.d/java.sh
-RUN	chmod a+rx /etc/profile.d/java.sh
 
 
 RUN  ln -s /opt/jdk1.${JAVA_MAJOR}.${JAVA_MINOR} /opt/java

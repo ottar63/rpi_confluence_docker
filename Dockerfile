@@ -47,6 +47,6 @@ COPY "docker-entrypoint.sh" "/"
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run Atlassian JIRA as a foreground process by default.
-CMD ["/opt/atlassian/confluence/bin/start-confluence.sh", "-fg"]
+CMD ["/opt/atlassian/confluence/bin/start_confluence_delay.sh"]
 
 

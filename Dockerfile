@@ -16,7 +16,7 @@ RUN  ln -s /opt/jdk1.${JAVA_MAJOR}.${JAVA_MINOR} /opt/java
 
 RUN 	apt-get update \
 	&& apt-get upgrade -y \
-	&& apt-get install curl -y  \
+    && apt install curl  ca-certificates -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*  \
 	&& mkdir -p ${CONF_HOME} \
 	&& mkdir -p ${CONF_INSTALL}  \
@@ -26,13 +26,7 @@ RUN 	apt-get update \
 	&& chown -R daemon:daemon ${CONF_INSTALL} \
 	&& echo -e  "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" 
 
-# copy 32 bit setenv
-#RUN cp "${CONF_INSTALL}/bin/setenv32.sh" "${CONF_INSTALL}/bin/setenv.sh"
 
-#increase timeout for starting plugin
-#RUN sed --in-place  "s/JVM_SUPPORT_RECOMMENDED_ARGS=\"\"/JVM_SUPPORT_RECOMMENDED_ARGS=\"-Datlassian.plugins.enable.wait=300\"/g" "${CONF_INSTALL}/bin/setenv.sh"
-	
-#RUN echo "jira.index.batch.maxrambuffermb=256\njira.index.interactive.maxrambuffermb=256\n" >>${CONF_INSTALL}/conluence-config.properties
 
 # run as daemon user
 USER daemon:daemon
@@ -46,7 +40,7 @@ WORKDIR /var/atlassian/confluence
 COPY "docker-entrypoint.sh" "/"
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-# Run Atlassian JIRA as a foreground process by default.
+# Run Atlassian Confluence with delay to be sure MySQL is up and running 
 COPY "start_confluence_delay.sh" "/"
 CMD ["/start_confluence_delay.sh"]
 

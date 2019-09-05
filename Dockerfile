@@ -18,7 +18,10 @@ RUN 	apt-get update \
 	&& apt-get upgrade -y \
     && apt install curl  ca-certificates -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*  \
-	&& mkdir -p ${CONF_HOME} \
+    && rm /etc/localtime \
+    && ln -s /usr/share/zoneinfo/Europe/Oslo /etc/localtime
+
+RUN	 mkdir -p ${CONF_HOME}  \
 	&& mkdir -p ${CONF_INSTALL}  \
 	&& curl -Ls  "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
 	&& curl -Ls "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.45.tar.gz" | tar -xz --directory "${CONF_INSTALL}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar" \
